@@ -34,11 +34,11 @@ echo "UPSTREAM_REPO=$UPSTREAM_REPO"
 
 if [[ $DOWNSTREAM_REPO == "GITHUB_REPOSITORY" ]]
 then
-  git clone "https://github.com/${GITHUB_REPOSITORY}.git" --branch ${DOWNSTREAM_BRANCH} work
+  git clone "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" --branch ${DOWNSTREAM_BRANCH} work
   cd work || { echo "Missing work dir" && exit 2 ; }
   git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
 else
-  git clone $DOWNSTREAM_REPO --branch ${DOWNSTREAM_BRANCH} work
+  git clone "https://x-access-token:${GITHUB_TOKEN}@github.com/${DOWNSTREAM_REPO/https:\/\/github.com\//}" --branch ${DOWNSTREAM_BRANCH} work
   cd work || { echo "Missing work dir" && exit 2 ; }
   git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${DOWNSTREAM_REPO/https:\/\/github.com\//}"
 fi
