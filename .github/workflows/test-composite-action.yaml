@@ -1,0 +1,21 @@
+name: Test composite action (no Docker)
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - test/composite-action
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run sync-upstream-repo composite action (upstream == downstream, always "Already up to date.")
+        uses: jstetina/sync-upstream-repo@test/composite-action
+        with:
+          upstream_repo: "https://github.com/red-hat-data-services/kserve.git"
+          upstream_branch: "main"
+          downstream_repo: "https://github.com/red-hat-data-services/kserve.git"
+          downstream_branch: "main"
+          token: ${{ secrets.GITHUB_TOKEN }}
+          merge_args: "--no-edit"
